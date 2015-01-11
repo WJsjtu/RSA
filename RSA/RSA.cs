@@ -12,18 +12,22 @@ namespace RSA_T
     {
         private readonly Int[] miniprime = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97 };
         public Int N, E, D, P, Q;
+
+        private int bits, ac;
+        private Random seed;
+
         //初始化
-	    public RSAmaker(Random seedin,int i_bits =14, int i_ac =20)
-	    {
+        public RSAmaker(Random seedin, int i_bits = 14, int i_ac = 20)
+        {
             bits = i_bits;
             ac = i_ac;
             seed = seedin;
-		    RSAKey();
-	    }
+            RSAKey();
+        }
         //加密
         public List<Int> Encrypt(ref string m)
         {
-            Int check =E;
+            Int check = E;
             int ebit = N.bitCount() / 8;
             int i = 0, l = m.Length;
             List<Int> encrypt = new List<Int>();
@@ -72,20 +76,20 @@ namespace RSA_T
             return res;
         }
         //m_b素性检测和二次探查
-        private bool MRT(Int p,Int k)
+        private bool MRT(Int p, Int k)
         {
-	        for(int i = 0;i < 25; i++)
-		        if((p % miniprime[i]) == 0 )
+            for (int i = 0; i < 25; i++)
+                if ((p % miniprime[i]) == 0)
                     return false;
-	        for(int i = 0;i < k;i++)
+            for (int i = 0; i < k; i++)
             {
-		        Int a = RandInt(2, p-2), x = a.modPow(p-1, p);
-		        if(x == 1 || x == p - 1)
+                Int a = RandInt(2, p - 2), x = a.modPow(p - 1, p);
+                if (x == 1 || x == p - 1)
                     continue;
-		        else 
+                else
                     return false;
-	        }
-	        return true;;
+            }
+            return true; ;
         }
         //随机数字，设上下限
         private Int RandInt(Int lower, Int upper)
@@ -101,57 +105,56 @@ namespace RSA_T
         //随机素数
         private Int RandPrime()
         {
-	        Int ans;
-	        while(true)
+            Int ans;
+            while (true)
             {
                 string move = "";
                 for (int i = bits - 1; i != 0; i--)
                     move += "0";
                 move = "1" + move;
-                ans = RandInt(new Int(move, 2), new Int(move+"0", 2) - 1) | 1;
-		        if(MRT(ans,ac))break;
-	        }
-	        return ans;
+                ans = RandInt(new Int(move, 2), new Int(move + "0", 2) - 1) | 1;
+                if (MRT(ans, ac)) break;
+            }
+            return ans;
         }
         //获取广义欧几里得除法的系数
-        private Int GetST(Int a ,Int b,ref Int s,ref Int t)
+        private Int GetST(Int a, Int b, ref Int s, ref Int t)
         {
-	        bool reversed = false;
-	        if( b > a)
+            bool reversed = false;
+            if (b > a)
             {
-		        Int tmp = a;a = b;b = tmp;
-		        reversed = true;
-	        }
-	        Int ss = 1,tt = 0;
-	        s = 0;t = 1;
-	        while(b != 0){
-		        Int temp = b,q = a/b;
-		        b = a % b;a = temp;
-		        temp = ss - q * s; ss = s;
-		        s = temp;temp = tt - q * t;
-		        tt = t; t = temp;
-	        }
-	        s = reversed ? tt : ss;
-	        t = reversed ? ss : tt;
-	        return a;
+                Int tmp = a; a = b; b = tmp;
+                reversed = true;
+            }
+            Int ss = 1, tt = 0;
+            s = 0; t = 1;
+            while (b != 0)
+            {
+                Int temp = b, q = a / b;
+                b = a % b; a = temp;
+                temp = ss - q * s; ss = s;
+                s = temp; temp = tt - q * t;
+                tt = t; t = temp;
+            }
+            s = reversed ? tt : ss;
+            t = reversed ? ss : tt;
+            return a;
         }
         //获取D和E
         private bool RSAKey()
         {
-	        P = RandPrime();
+            P = RandPrime();
             Q = RandPrime();
-	        N = P * Q;Int X = N - P - Q + 1;
-	        do E = RandInt(1, 65536) | 1;
-	        while( E.gcd(X) != 1 );
-	        Int A = 0,B = 0;
-	        GetST( E, X, ref A, ref B);
-	        while(A < 0)
-		        A += X;
-	        D= A % N;
-	        return true;
+            N = P * Q; Int X = N - P - Q + 1;
+            do E = RandInt(1, 65536) | 1;
+            while (E.gcd(X) != 1);
+            Int A = 0, B = 0;
+            GetST(E, X, ref A, ref B);
+            while (A < 0)
+                A += X;
+            D = A % N;
+            return true;
         }
-        private int bits, ac;
-        private Random seed;
     };
     #endregion
 
@@ -273,7 +276,7 @@ namespace RSA_T
             return true;
         }
         //加密
-        public List<long> Encrypt(ref string m, int bit = 3 )
+        public List<long> Encrypt(ref string m, int bit = 3)
         {
             int i = 0, l = m.Length;
             List<long> encrypt = new List<long>();

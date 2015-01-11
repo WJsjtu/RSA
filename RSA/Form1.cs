@@ -8,7 +8,8 @@ using System.Windows.Forms;
 using BigInteger;
 //二选一
 //using Int = BigInteger.BigInteger;using RSAtype = RSA_T.RSAmaker;//使用大数类的RSA产生类
-using Int = System.Int64;using RSAtype = RSA_T.S_RSAmaker;//使用long long 型存数的RSA产生类
+using Int = System.Int64;
+using RSAtype = RSA_T.S_RSAmaker;//使用long long 型存数的RSA产生类
 namespace RSA_T
 {
     public partial class Form1 : Form
@@ -30,7 +31,7 @@ namespace RSA_T
         {
             this.rsa = new RSAtype(new Random());
             string tmp = this.richTextBox1.Text;
-            List<Int> ee = rsa.Encrypt(ref tmp );
+            List<Int> ee = rsa.Encrypt(ref tmp);
             this.richTextBox3.Text = rsa.getEncrypt(ref ee);
             this.richTextBox2.Text = rsa.Decrypt(ref ee);
             this.richTextBox4.Text = "P: " + rsa.P.ToString() + "\nQ: "
@@ -47,7 +48,7 @@ namespace RSA_T
             this.button1.Location = new Point(this.button1.Location.X, 302 + 2 * delta);
             this.label2.Location = new Point(15, 155 + delta);
             this.label3.Location = new Point(this.richTextBox4.Location.X + 1, 155 + delta);
-            this.label4.Location = new Point(15,330 + 2 * delta);
+            this.label4.Location = new Point(15, 330 + 2 * delta);
             this.richTextBox3.Location = new Point(12, 172 + delta);
             this.richTextBox4.Location = new Point(this.richTextBox4.Location.X, 172 + delta);
             this.richTextBox2.Location = new Point(12, 354 + 2 * delta);
@@ -58,7 +59,7 @@ namespace RSA_T
             this.Height = 600;
             this.Width = 900;
         }
-        
+
         private void Form1_Load(object sender, EventArgs e)
         {
             string tmp = this.richTextBox1.Text;
