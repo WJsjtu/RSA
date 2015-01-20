@@ -116,7 +116,7 @@ namespace RSA_T
         }
 
 
-        //random prime
+        //Random prime
         private Int RandPrime()
         {
             Int ans;
@@ -133,7 +133,7 @@ namespace RSA_T
         }
 
 
-        //get the generalized Euclidean division coefficient
+        //Obtain the generalized Euclidean division coefficient
         private Int GetST(Int a, Int b, ref Int s, ref Int t)
         {
             bool reversed = false;
@@ -185,7 +185,7 @@ namespace RSA_T
 
         private Random seed;
 
-        //random number
+        //随机数字，设上下限
         private long RandInt(long lower, long upper)
         {
             if (upper < lower)
@@ -204,8 +204,6 @@ namespace RSA_T
             seed = seedin;
             RSAKey(14, 20);
         }
-
-
         //重复模平方法
         private long ModPow(long a, long n, long p)
         {
@@ -219,9 +217,7 @@ namespace RSA_T
             }
             return s;
         }
-
-
-        //m_b test
+        //m_b素性检测和二次探查
         private bool MRT(long p, long k)
         {
             for (int i = 0; i < 25; i++)
@@ -237,9 +233,7 @@ namespace RSA_T
             }
             return true; ;
         }
-
-
-        //random prime
+        //随机素数
         private long RandPrime(int bits, int ac = 20)
         {
             long ans;
@@ -250,9 +244,7 @@ namespace RSA_T
             }
             return ans;
         }
-
-
-        //get the generalized Euclidean division coefficient
+        //获取广义欧几里得除法的系数
         private long GetST(long a, long b, ref long s, ref long t)
         {
             bool reversed = false;
@@ -275,8 +267,7 @@ namespace RSA_T
             t = reversed ? ss : tt;
             return a;
         }
-
-        //gcd
+        //最大公因数
         private long Gcd(long a, long b)
         {
             if (a < b)
@@ -290,8 +281,7 @@ namespace RSA_T
             }
             return b;
         }
-
-        //get D&E
+        //获取D和E
         private bool RSAKey(int bits = 14, int ac = 20)
         {
             P = RandPrime(bits, ac);
@@ -306,8 +296,7 @@ namespace RSA_T
             D = A % N;
             return true;
         }
-
-        //encrypt
+        //加密
         public List<long> Encrypt(ref string m, int bit = 3)
         {
             int i = 0, l = m.Length;
@@ -329,9 +318,7 @@ namespace RSA_T
             }
             return encrypt;
         }
-
-
-        //decrypte
+        //解密
         public string Decrypt(ref List<long> m)
         {
             int l = m.Count;
@@ -349,7 +336,6 @@ namespace RSA_T
             }
             return ans;
         }
-
         //加密数字以16进制显示成字符串
         public string getEncrypt(ref List<long> m)
         {
